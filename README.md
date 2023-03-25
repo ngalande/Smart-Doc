@@ -17,7 +17,7 @@ Firebase is Google's mobile platform that helps you quickly develop high-quality
 
 - [Recommendations](#recomendations)
 - [Installation](#installation)
-- [Running the App](#creating-the-app)
+- [Running the App](#running-the-app)
 
 
 ## Recomendations
