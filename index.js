@@ -1,6 +1,3 @@
-// dapp-begin
-// require('@node-fi/react-native-sdk/setup')
-// import './shim'
 import { registerRootComponent } from 'expo';
 
 import App from './App';
