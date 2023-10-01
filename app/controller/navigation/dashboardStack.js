@@ -11,6 +11,7 @@ import Chat from '../../dashboard/chat';
 // import Settings from '../../dashboard/settings';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Monitor from '../../dashboard/Monitor';
 // import QrScanner from '../../dashboard/qrPopups/qrScanner';
 
 
@@ -41,6 +42,22 @@ export default function DashboardStack() {
                     <Tabs.Screen 
 						name="Home" 
 						component={Home} 
+						options={{
+							tabBarIcon: ({ focused, color, size }) => (
+								<Icon
+									name="home"
+									size={30}
+									color={focused ? color : "#fff"}
+									focused={focused}
+									// color={color}
+									
+								/>
+							)
+						  }}
+					/>
+					<Tabs.Screen 
+						name="Monitor" 
+						component={Monitor} 
 						options={{
 							tabBarIcon: ({ focused, color, size }) => (
 								<Icon

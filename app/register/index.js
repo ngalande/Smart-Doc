@@ -234,7 +234,7 @@ export default function Register ({ navigation, homeScreenName }){
 
                 </View>
 
-                <Text style={styles.copywrite}>@2023 Smart-Doc. All Rights Reserved.</Text>
+                <Text style={styles.copywrite}>@2023 Smart-Doc ngalande.io. All Rights Reserved.</Text>
 
             </View>
         </KeyboardAwareScrollView>

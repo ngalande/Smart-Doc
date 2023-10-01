@@ -10,7 +10,7 @@ export default function Chat() {
         setMessages([
             {
                 _id: 1,
-                text: 'Hello Welcome to Smart-Doc, what would we assist you with today?',
+                text: 'Hello Welcome to IoT-Based Health Monitoring System, what would we assist you with today?',
                 createdAt: new Date(),
                 quickReplies: {
                   type: 'radio', // or 'checkbox',
@@ -37,7 +37,7 @@ export default function Chat() {
               },
               {
                 _id: 2,
-                text: 'Smart-Doc by Code_Pappi',
+                text: 'IoT-Based Health Monitoring System',
                 createdAt: new Date(),
                 quickReplies: {
                   type: 'checkbox', // or 'radio',

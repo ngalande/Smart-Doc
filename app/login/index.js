@@ -218,7 +218,7 @@ export default function Login (){
                         </View>
                         <View style={{alignSelf:'center', marginBottom:50, flex:1}}>
 
-                <Text style={styles.copywrite}>@2023 Smart-Doc Limited. All Rights Reserved.</Text>
+                <Text style={styles.copywrite}>@2023 Smart-Doc ngalande.io. All Rights Reserved.</Text>
 
 
             </View>
