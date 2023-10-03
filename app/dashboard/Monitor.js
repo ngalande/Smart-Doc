@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native'
-import React, { useContext } from 'react'
+import { View, Text, Dimensions } from 'react-native'
+import React, { useContext, useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -10,6 +10,13 @@ import app from '../../firebaseConfig';
 import { Pressable } from 'react-native';
 import { AuthContext } from '../../App';
 import { Linking } from 'react-native';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph
+  } from 'react-native-chart-kit'
 
 
 export default function Monitor() {
@@ -17,6 +24,15 @@ export default function Monitor() {
     const auth = getAuth(app)
     const {user, setUser} = useContext(AuthContext)
     const number = 'tel:${+260970780360}';
+    const screenWidth = Dimensions.get('window').width;
+    const [selectedDataPoint, setSelectedDataPoint] = useState(null);
+
+  const handleDataPointClick = (dataPoint, datasetIndex) => {
+    // You can perform actions when a data point is clicked here.
+    // For example, you can display a tooltip or update some state.
+    setSelectedDataPoint({ dataPoint, datasetIndex });
+  };
+
     const handleSignOut = () =>{
         console.log(auth)
         signOut(auth)
@@ -28,6 +44,48 @@ export default function Monitor() {
                 console.log(e)
             })
     }
+
+    const data = {
+        // labels: ["Jan", "Feb", "Mar", "April", "June", "July", "Aug"], // Bottom Labels
+        datasets: [
+          {
+            data: [10.47, 25.6, 11.4, 19.5, 8.9, 30.9, 55.9], // Data for Chart 
+            // amount: [5093995050, 283893, 382389, 80909, 48908, 893022, 2839090], //Amount show on the ToolTip
+            // color: "#000531", // Chart Line Color
+            // currency: "USD", //Currency to show before amount , 
+            // id: 1, //ID
+          },
+          //You can add another set here with different data
+        ],
+      }
+
+      const customDecorator = (config) => {
+        return (
+          <View
+            // key={index}
+            style={{
+              marginLeft: 10,
+              marginTop: 20,
+              flexDirection:'row'
+
+            }}
+          >
+            <View style={{width: 2, height: 20, backgroundColor: '#dde7ed', marginRight: 5}}></View>
+            <Text style={{fontSize: 16,
+              fontWeight: 'bold',
+              color: '#fff',}}>
+
+            HEART RATE
+            </Text>
+          </View>
+        );
+      };
+    
+      const chartConfig = {
+        backgroundGradientFrom: 'white',
+        backgroundGradientTo: 'white',
+        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+      };
 
   return (
     <View style={{flex:1}}>
@@ -47,20 +105,61 @@ export default function Monitor() {
             <Text style={{fontWeight:'bold', color:'#fff', fontSize:16}}>Welcome, <Text style={{fontSize:16,}}>{userEmail?.currentUser?.email}</Text> </Text>
         </View>
       </TouchableOpacity>
-        <View style={{flexDirection:'row'}}>
+        {/* <View style={{flexDirection:'row'}}> */}
       
 
-      {/* <TouchableOpacity onPress={() => Linking.openURL(number)} style={{backgroundColor:'#4786bf', alignSelf:'flex-end', borderRadius:16, width:'40%', height:150, marginTop:80, position:'absolute', right:20}}>
-        <View style={{margin:20, }}>
-            <Feather  name="phone-call" size={40} color="#fff" />
-            <View style={{}}>
-                <Text style={{color:'#fff', fontSize:16, marginTop:15}}>CONTACT DOCTOR</Text>
-            </View>
+        {/* <TouchableOpacity disabled={true} style={{backgroundColor:'#4786bf', alignSelf:'center', borderRadius:16, width:'80%', height:150, marginTop:80, }}>
+       
+    */}
+       <View style={{marginTop:80,}}> 
+        <LineChart
+            data={data}
+              
+            width={350}
+            height={150}
+            style={{
+                borderRadius: 16, 
+                alignSelf:'center', 
+                paddingRight: 10 
+            }}
+            yAxisLabel={'$'}
+            chartConfig={{
+              backgroundGradientFrom: '#138acf',
+              backgroundGradientTo: '#014166',
+              color: (opacity = 3) => `#fff`,
+              decimalPlaces: 1,
+              propsForBackgroundLines: {
+                strokeWidth: 0,
+                
+              },
+              
+              
+              yLabelsOffset: -20,
 
-        </View>
+            }}
+            // hideLegend={true}
+            withVerticalLabels={false}
+            withOuterLines={false} 
+            withHorizontalLabels={false}
+            withDots
+            
+              bezier
+              decorator={customDecorator}
+          />
+
+         </View>
+        {/*
         
       </TouchableOpacity> */}
-        </View>
+      
+      {/* <BarChart
+      data={data}
+      width={screenWidth - 40} // Adjust this value to fit your card's width
+      height={200}
+      yAxisLabel="$"
+      chartConfig={chartConfig}
+    /> */}
+        {/* </View> */}
     </View>
   )
 }

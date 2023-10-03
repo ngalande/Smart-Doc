@@ -32,7 +32,8 @@ export default function Chat() {
                 },
                 user: {
                   _id: 2,
-                  name: 'React Native',
+                  avatar: 'https://previews.123rf.com/images/yupiramos/yupiramos1607/yupiramos160705616/59613224-doctor-avatar-profile-isolated-icon-vector-illustration-graphic.jpg',
+                  name: 'Doctor',
                 },
               },
               {
@@ -58,7 +59,8 @@ export default function Chat() {
                 },
                 user: {
                   _id: 2,
-                  name: 'React Native',
+                  name: 'Doctor',
+                  avatar: 'https://previews.123rf.com/images/yupiramos/yupiramos1607/yupiramos160705616/59613224-doctor-avatar-profile-isolated-icon-vector-illustration-graphic.jpg',
                 },
               }
         ])
