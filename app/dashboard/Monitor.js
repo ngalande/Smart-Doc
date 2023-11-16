@@ -17,7 +17,9 @@ import {
     ProgressChart,
     ContributionGraph
   } from 'react-native-chart-kit'
-
+import { getDatabase, ref, onValue, set } from 'firebase/database';
+import { useEffect } from 'react';
+const db = getDatabase(app);
 
 export default function Monitor() {
     const userEmail = getAuth(app)
@@ -26,6 +28,27 @@ export default function Monitor() {
     const number = 'tel:${+260970780360}';
     const screenWidth = Dimensions.get('window').width;
     const [selectedDataPoint, setSelectedDataPoint] = useState(null);
+    const [bpm, setBpm] = useState(null);
+    const [time, setTime] = useState(null);
+    const [isConnected, setIsConnected] = useState(false);
+
+    useEffect(() => {
+      const query = ref(db, '/smartdoc');
+      //getData()
+      return onValue(query, async(snapshot) => {
+        const data =  (await snapshot.val()) ?? [];
+  
+        if (snapshot.exists()) {
+          //getTemp(data.temp)
+          setBpm(data.data.BPM)
+          setTime(data.data.ts)
+          setIsConnected(data.data.isConnected)
+          console.log(data.data)
+      
+        }
+      });
+      // console.log('first')
+    }, []);
 
   const handleDataPointClick = (dataPoint, datasetIndex) => {
     // You can perform actions when a data point is clicked here.
@@ -70,13 +93,35 @@ export default function Monitor() {
 
             }}
           >
-            <View style={{width: 2, height: 20, backgroundColor: '#dde7ed', marginRight: 5}}></View>
+            <View style={{width: 2, height: 20, backgroundColor: '#dde7ed', marginRight: 5, flexDirection: 'row', justifyContent:'space-between'}}></View>
             <Text style={{fontSize: 16,
               fontWeight: 'bold',
               color: '#fff',}}>
 
             HEART RATE
             </Text>
+            
+              {isConnected == 'true' ? (
+                <Text style={{fontSize: 30,
+                  fontWeight: 'bold',
+                  color: Number(bpm) > 110 ? '#cc3f46' : Number(bpm) < 55 ? '#cc3f46' : '#158c3f',
+                  marginLeft: 70
+                  }}>
+                {`${Number(bpm ).toFixed(1)} BPM`}
+            </Text>
+              ) : (
+                <Text style={{fontSize: 20,
+                  fontWeight: 'bold',
+                  color: '#cc3f46',
+                  marginLeft: 30
+                  }}>
+                  
+                  Not Connected
+                </Text>
+              )}
+            
+            
+            
           </View>
         );
       };
